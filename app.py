@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 import pymysql
+import json
 
 app = Flask(__name__)
 
@@ -44,9 +45,48 @@ def MyPosition():
     },200
 
 ##카테고리 선택했을 때
-@app.route('/Category',methods = ["POST"])
+@app.route("/Category",methods = ["POST"])
 def Category():
-    pass
+    #인자 받기
+    cate = request.values.get('Category')
+    subCate = request.values.get('SubCategory')
+    storeType = request.values.get('StoreType')
+    myLng = request.values.get('myPositionLng')
+    myLat = request.values.get('myPositionLat')
+    mbr = request.values.get('mbr')
+    
+    
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    cur = con.cursor()
+    # , StoreDetail.StorePhoto <- Base64 문제해결 필요
+    sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
+            Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory\
+            , StoreDetail.StoreName,\
+            ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
+            FROM StoreInfo\
+            INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
+            INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
+            WHERE ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s\
+            AND StoreInfo.Category like %s AND StoreInfo.SubCategory like %s AND StoreInfo.StoreType like %s\
+            ORDER BY Distance LIMIT 100"
+    cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,cate,subCate,storeType))
+    rows = cur.fetchall()
+    print(rows)
+    keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat","CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
+    items = [dict(zip(keys,row)) for row in rows]
+    # print(items)
+    con.close()
+    
+    return{
+        "total" : len(rows),
+        "items" : items,
+        "Category" : cate,
+        "SubCategory" : subCate,
+        "StoreType" : storeType,
+    },200
+    
 
 if __name__ == "__main__" :
     app.run(host='0.0.0.0', port=5000)
