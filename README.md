@@ -4,9 +4,9 @@
 
 ## 지도
 ### 마커 띄우기
-호출 URL : POST http://3.130.31.88:5000/MyPosition?myPositionLng=127.043517&myPositionLat=37.28224800000001&mbr=5000
+호출 URL : POST http://3.130.31.88:5000/MyPosition?myPositionLng=127.043517&myPositionLat=37.28224800000001&mbr=5000  
 결과 예시 : 
-'''json
+```json
 {
 	"items": [
 		{
@@ -812,4 +812,4 @@
 	],
 	"total": 100
 }
-'''
+```
