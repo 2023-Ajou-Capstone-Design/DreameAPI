@@ -90,7 +90,42 @@ def Category():
         "total" : len(rows),
         "items" : items
     }
+
+## 키워드 검색시
+@app.route("/KeywordSearch",methods = ["POST"])
+def KeywordSearch():
+    #인자 받기
+    keyword = request.values.get('Keyword')
+    myLng = request.values.get('myPositionLng')
+    myLat = request.values.get('myPositionLat')
+    mbr = request.values.get('mbr')
+         
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    cur = con.cursor()
+    sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreDetail.StorePhoto, StoreDetail.StoreName,\
+           Tag.CateName, Tag.SubCateName, StoreInfo.StorePointLng, StoreInfo.StorePointLat, StoreInfo.Category, StoreInfo.SubCategory,\
+           ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
+           FROM StoreInfo\
+           INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
+           INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
+           WHERE (ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s AND\
+           (StoreDetail.StoreName like  CONCAT('%%', %s, '%%') OR Tag.CateName like  CONCAT('%%', %s, '%%') OR Tag.SubCateName like  CONCAT('%%', %s, '%%')))\
+            ORDER BY Distance LIMIT 100"
+    cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,keyword,keyword,keyword))
     
+    rows = cur.fetchall()
+    keys = ("StoreID","StoreType","StorePhoto","StoreName","CateName","SubCateName","StorePointLng","StorePointLat","Category","SubCategory","Distance")
+    items = [dict(zip(keys,row)) for row in rows]
+    for item in items :
+        item["StorePhoto"] = base64ToString(item["StorePhoto"])
+    con.close()
+    
+    return{
+        "total" : len(rows),
+        "items" : items
+    }
 
 if __name__ == "__main__" :
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True,host='0.0.0.0', port=5000)
