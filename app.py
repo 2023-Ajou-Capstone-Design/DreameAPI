@@ -67,7 +67,6 @@ def Category():
                             user='dreameAdmin', password='dreame9785',
                             db='Dreame', charset='utf8')
     cur = con.cursor()
-    # , StoreDetail.StorePhoto <- Base64 문제해결 필요
     sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
             Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory, StoreDetail.StorePhoto\
             , StoreDetail.StoreName,\
@@ -79,14 +78,12 @@ def Category():
             AND StoreInfo.Category like %s AND StoreInfo.SubCategory like %s AND StoreInfo.StoreType like %s\
             ORDER BY Distance LIMIT 100"
     cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,cate,subCate,storeType))
+    
     rows = cur.fetchall()
-    # print(rows)
     keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat","CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
     items = [dict(zip(keys,row)) for row in rows]
     for item in items :
         item["StorePhoto"] = base64ToString(item["StorePhoto"])
-    #     print(type(item["StorePhoto"]))
-    # print(items)
     con.close()
     
     return{
