@@ -1,9 +1,16 @@
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
+from flask import Flask, request
 import pymysql
-import json
+import base64
 
 app = Flask(__name__)
+
+def stringToBase64(s) :
+    return base64.b64encode(s.encode("utf-8"))
+
+def base64ToString(b):
+    return base64.b64decode(b).decode("utf-8")
+
+
 
 #접근 테스트
 @app.route('/Hello')
@@ -62,7 +69,7 @@ def Category():
     cur = con.cursor()
     # , StoreDetail.StorePhoto <- Base64 문제해결 필요
     sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
-            Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory\
+            Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory, StoreDetail.StorePhoto\
             , StoreDetail.StoreName,\
             ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
             FROM StoreInfo\
@@ -73,19 +80,19 @@ def Category():
             ORDER BY Distance LIMIT 100"
     cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,cate,subCate,storeType))
     rows = cur.fetchall()
-    print(rows)
+    # print(rows)
     keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat","CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
     items = [dict(zip(keys,row)) for row in rows]
+    for item in items :
+        item["StorePhoto"] = base64ToString(item["StorePhoto"])
+    #     print(type(item["StorePhoto"]))
     # print(items)
     con.close()
     
     return{
         "total" : len(rows),
-        "items" : items,
-        "Category" : cate,
-        "SubCategory" : subCate,
-        "StoreType" : storeType,
-    },200
+        "items" : items
+    }
     
 
 if __name__ == "__main__" :
