@@ -45,3 +45,27 @@
 	"total" : 1
 }
 ```
+
+## 키워드 검색
+호출 URL : http://3.130.31.88:5000/KeywordSearch?myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000&Keyword=%EC%8A%A4%EC%8B%9C
+결과 예시 :
+```json
+{
+	"items": [
+		{
+			"CateName": "식음료",
+			"Category": "1",
+			"Distance": 4688.589533690853,
+			"StoreID": 7276,
+			"StoreName": "(주)스시타이쇼",
+			"StorePhoto": "",
+			"StorePointLat": 37.2492,
+			"StorePointLng": 127.076,
+			"StoreType": "1",
+			"SubCateName": "기타",
+			"SubCategory": "99"
+		}
+	],
+	"total" : 1
+}
+```
