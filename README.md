@@ -69,3 +69,35 @@
 	"total" : 1
 }
 ```
+
+### 마커 클릭 혹은 가게 클릭시
+호출 URL : http://3.130.31.88:5000/StoreDetail?StoreID=5064&StoreType=1  
+결과 예시 :  
+```json
+{
+	"items": [
+		{
+			"Address": "경기도 수원시 팔달구 아주로 43-1",
+			"CateName": "식음료",
+			"DayFinish": "0:00:00",
+			"DayStart": "0:00:00",
+			"DetailAddress": "",
+			"HoliFinish": "0:00:00",
+			"HoliStart": "0:00:00",
+			"Item": "",
+			"Phone": "031-216-8579",
+			"Provided1": "",
+			"Provided2": "",
+			"SatFinish": "0:00:00",
+			"SatStart": "0:00:00",
+			"StoreID": 5064,
+			"StoreName": "엉클돈까스",
+			"StorePhoto": "",
+			"StoreType": "1",
+			"SubCateName": "기타",
+			"WorkDay": ""
+		}
+	],
+	"total": 1
+}
+```
