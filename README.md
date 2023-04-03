@@ -23,7 +23,8 @@
 ```
 
 ### 카테고리 선택시
-호출 URL : POST http://3.130.31.88:5000/Category?Category=2&SubCategory=2&StoreType=1&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
+#### 대분류 카테고리 선택
+호출 URL : POST http://3.130.31.88:5000/Choose/Category?Category=2&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
 결과예시 : 
 ```json
 {
@@ -31,12 +32,12 @@
 		{
 			"CateName": "마트",
 			"Category": "2",
-			"Distance": 4688.589533690853,
-			"StoreID": 2561,
-			"StoreName": "씨유수원세류3동점",
+			"Distance": 91.6549791856995,
+			"StoreID": 8213,
+			"StoreName": "씨유(CU) 아주대일신관점",
 			"StorePhoto": "",
-			"StorePointLat": 37.2492,
-			"StorePointLng": 127.076,
+			"StorePointLat": 37.28305638,
+			"StorePointLng": 127.043660039,
 			"StoreType": "1",
 			"SubCateName": "편의점",
 			"SubCategory": "2"
