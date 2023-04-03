@@ -22,8 +22,8 @@
 }
 ```
 
-## 카테고리 선택시
-호출 URL : POST http://3.130.31.88:5000/Category?Category=2&SubCategory=2&StoreType=1&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000
+### 카테고리 선택시
+호출 URL : POST http://3.130.31.88:5000/Category?Category=2&SubCategory=2&StoreType=1&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
 결과예시 : 
 ```json
 {
@@ -46,8 +46,8 @@
 }
 ```
 
-## 키워드 검색
-호출 URL : http://3.130.31.88:5000/KeywordSearch?myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000&Keyword=%EC%8A%A4%EC%8B%9C
+### 키워드 검색
+호출 URL : http://3.130.31.88:5000/KeywordSearch?myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000&Keyword=%EC%8A%A4%EC%8B%9C  
 결과 예시 :
 ```json
 {
