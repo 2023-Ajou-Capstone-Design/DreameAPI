@@ -97,7 +97,45 @@ def ChooseCategory() :
 ### 소분류 카테고리 선택했을때
 @app.route("/Choose/SubCategory",methods=["POST"]) 
 def ChooseSubCategory() :
-    pass 
+    #인자 받기
+    cate = request.values.get('Category')
+    subcate = request.values.get('SubCategory')
+    myLng = request.values.get('myPositionLng')
+    myLat = request.values.get('myPositionLat')
+    mbr = request.values.get('mbr')
+    
+    
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    
+    cur = con.cursor()
+    sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
+            Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory, StoreDetail.StorePhoto\
+            , StoreDetail.StoreName,\
+            ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
+            FROM StoreInfo\
+            INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
+            INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
+            WHERE ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s\
+            AND StoreInfo.Category like %s AND StoreInfo.SubCategory like %s\
+            ORDER BY Distance LIMIT 50"
+            
+    cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,cate,subcate))
+    
+    rows = cur.fetchall()
+    keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat",
+            "CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
+    items = [dict(zip(keys,row)) for row in rows]
+            
+    for item in items :
+        item["StorePhoto"] = base64ToString(item["StorePhoto"])
+    con.close()
+    
+    return{
+        "total" : len(rows),
+        "items" : items
+    }
 
 ### 가게 유형 선택했을 때
 @app.route("/Choose/StoreType",methods=["POST"]) 
