@@ -46,6 +46,30 @@
 	"total" : 1
 }
 ```
+#### 소분류 카테고리 선택
+호출 URL : POST http://3.130.31.88:5000/Choose/SubCategory?Category=2&SubCategory=2&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
+결과 예시 :
+```json
+{
+	"items": [
+		{
+			"CateName": "마트",
+			"Category": "2",
+			"Distance": 91.6549791856995,
+			"StoreID": 8213,
+			"StoreName": "씨유(CU) 아주대일신관점",
+			"StorePhoto": "",
+			"StorePointLat": 37.28305638,
+			"StorePointLng": 127.043660039,
+			"StoreType": "1",
+			"SubCateName": "편의점",
+			"SubCategory": "2"
+		}
+	],
+	"total" : 1
+}
+
+```
 
 ### 키워드 검색
 호출 URL : http://3.130.31.88:5000/KeywordSearch?myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000&Keyword=%EC%8A%A4%EC%8B%9C  
