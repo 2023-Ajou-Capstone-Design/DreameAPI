@@ -38,7 +38,7 @@ def MyPosition():
             FROM StoreInfo\
             INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType like StoreDetail.StoreType)\
             WHERE ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s\
-            ORDER BY Distance LIMIT 100"
+            ORDER BY Distance LIMIT 50"
     cur.execute(sql,(myLng,myLat,myLng,myLat,mbr))
     rows = cur.fetchall()
     keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat","StoreName","Distance")
@@ -76,7 +76,7 @@ def Category():
             INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
             WHERE ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s\
             AND StoreInfo.Category like %s AND StoreInfo.SubCategory like %s AND StoreInfo.StoreType like %s\
-            ORDER BY Distance LIMIT 100"
+            ORDER BY Distance LIMIT 50"
     cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,cate,subCate,storeType))
     
     rows = cur.fetchall()
@@ -112,7 +112,7 @@ def KeywordSearch():
            INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
            WHERE (ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s AND\
            (StoreDetail.StoreName like  CONCAT('%%', %s, '%%') OR Tag.CateName like  CONCAT('%%', %s, '%%') OR Tag.SubCateName like  CONCAT('%%', %s, '%%')))\
-            ORDER BY Distance LIMIT 100"
+            ORDER BY Distance LIMIT 50"
     cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,keyword,keyword,keyword))
     
     rows = cur.fetchall()
