@@ -51,13 +51,12 @@ def MyPosition():
         "items" : items
     },200
 
-##카테고리 선택했을 때
-@app.route("/Category",methods = ["POST"])
-def Category():
+## 카테고리 선택했을 때
+### 대분류 카테고리 선택했을때
+@app.route("/Choose/Category",methods=["POST"]) 
+def ChooseCategory() :
     #인자 받기
     cate = request.values.get('Category')
-    subCate = request.values.get('SubCategory')
-    storeType = request.values.get('StoreType')
     myLng = request.values.get('myPositionLng')
     myLat = request.values.get('myPositionLat')
     mbr = request.values.get('mbr')
@@ -66,6 +65,7 @@ def Category():
     con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
                             user='dreameAdmin', password='dreame9785',
                             db='Dreame', charset='utf8')
+    
     cur = con.cursor()
     sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
             Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory, StoreDetail.StorePhoto\
@@ -75,13 +75,16 @@ def Category():
             INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
             INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
             WHERE ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s\
-            AND StoreInfo.Category like %s AND StoreInfo.SubCategory like %s AND StoreInfo.StoreType like %s\
+            AND StoreInfo.Category like %s\
             ORDER BY Distance LIMIT 50"
-    cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,cate,subCate,storeType))
+            
+    cur.execute(sql,(myLng,myLat,myLng,myLat,mbr,cate))
     
     rows = cur.fetchall()
-    keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat","CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
+    keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat",
+            "CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
     items = [dict(zip(keys,row)) for row in rows]
+            
     for item in items :
         item["StorePhoto"] = base64ToString(item["StorePhoto"])
     con.close()
@@ -89,7 +92,17 @@ def Category():
     return{
         "total" : len(rows),
         "items" : items
-    }
+    } 
+
+### 소분류 카테고리 선택했을때
+@app.route("/Choose/SubCategory",methods=["POST"]) 
+def ChooseSubCategory() :
+    pass 
+
+### 가게 유형 선택했을 때
+@app.route("/Choose/StoreType",methods=["POST"]) 
+def ChooseStoreType() :
+    pass 
 
 ## 키워드 검색시
 @app.route("/KeywordSearch",methods = ["POST"])
@@ -129,11 +142,6 @@ def KeywordSearch():
 
 
 ## 마커클릭시 가게 클릭시 
-"""
-StoreID, StoreType, StorePhoto, StoreName, CateName, SubCateName, 
-Address, DetailAddress, DayStart,DayFinish, SatStart, SatFinish, 
-HoliStart, HoliFinish, Item, Provided1, Provided2, Phone, WorkDay
-"""
 @app.route("/StoreDetail",methods = ["POST"])
 def StoreDetail():
     #인자 받기
@@ -176,6 +184,9 @@ def StoreDetail():
         "items" : items
     }
     
+
+# 푸드쉐어링 관련 기능
+
 
 if __name__ == "__main__" :
     app.run(debug=True,host='0.0.0.0', port=5000)
