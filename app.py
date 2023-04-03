@@ -127,5 +127,55 @@ def KeywordSearch():
         "items" : items
     }
 
+
+## 마커클릭시 가게 클릭시 
+"""
+StoreID, StoreType, StorePhoto, StoreName, CateName, SubCateName, 
+Address, DetailAddress, DayStart,DayFinish, SatStart, SatFinish, 
+HoliStart, HoliFinish, Item, Provided1, Provided2, Phone, WorkDay
+"""
+@app.route("/StoreDetail",methods = ["POST"])
+def StoreDetail():
+    #인자 받기
+    id = request.values.get('StoreID')
+    storeType = request.values.get('StoreType')
+         
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    cur = con.cursor()
+    sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreDetail.StorePhoto, StoreDetail.StoreName,\
+           Tag.CateName, Tag.SubCateName, StoreDetail.Address, StoreDetail.DetailAddress,\
+           StoreDetail.DayStart,StoreDetail.DayFinish, StoreDetail.SatStart, StoreDetail.SatFinish,\
+           StoreDetail.HoliStart, StoreDetail.HoliFinish, StoreDetail.Item, StoreDetail.Provided1, StoreDetail.Provided2,\
+           StoreDetail.Phone, StoreDetail.WorkDay\
+           FROM StoreInfo\
+           INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
+           INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
+           WHERE (StoreInfo.StoreID = %s AND StoreInfo.StoreType like %s)"
+    cur.execute(sql,(id,storeType))
+    
+    rows = cur.fetchall()
+    keys = ("StoreID","StoreType","StorePhoto","StoreName",
+            "CateName","SubCateName","Address","DetailAddress",
+            "DayStart","DayFinish","SatStart","SatFinish","HoliStart","HoliFinish",
+            "Item","Provided1","Provided2","Phone","WorkDay")
+    items = [dict(zip(keys,row)) for row in rows]
+    for item in items :
+        item["StorePhoto"] = base64ToString(item["StorePhoto"])
+        item["DayStart"] = str(item["DayStart"])
+        item["DayFinish"] = str(item["DayFinish"])
+        item["SatStart"] = str(item["SatStart"])
+        item["SatFinish"] = str(item["SatFinish"])
+        item["HoliStart"] = str(item["HoliStart"])
+        item["HoliFinish"] = str(item["HoliFinish"])
+    con.close()
+    
+    return{
+        "total" : len(rows),
+        "items" : items
+    }
+    
+
 if __name__ == "__main__" :
     app.run(debug=True,host='0.0.0.0', port=5000)
