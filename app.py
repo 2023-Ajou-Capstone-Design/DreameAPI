@@ -50,7 +50,7 @@ def MyPosition():
     return{
         "total" : len(rows),
         "items" : items
-    },200
+    }
 
 ## 카테고리 선택했을 때
 ### 대분류 카테고리 선택했을때
@@ -263,7 +263,25 @@ def StoreDetail():
 ## 북마커 추가
 @app.route("/Bookmark/add",methods=["POST"])
 def BookmarkAdd():
-    pass
+    uid = request.values.get("UserID")
+    sid = request.values.get("StoreID")
+    stype = request.values.get("StoreType")
+    
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    cur = con.cursor()
+    sql = "INSERT INTO Bookmarks(UserID,StoreID,StoreType)\
+        VALUES(%s,%s,%s)"
+    cur.execute(sql,(uid,sid,stype))
+    
+    con.commit()
+    
+    con.close()
+    
+    return "sucess"
+    
+    
 
 ## 북마커 삭제
 @app.route("/Bookmark/del",methods=["POST"])
@@ -274,6 +292,8 @@ def BookmarkDel():
 @app.route("/Bookmark/list",methods=["POST"])
 def BookmarkList():
     pass
+    
+    
 
 # 푸드쉐어링 관련 기능
 ## 글 등록
