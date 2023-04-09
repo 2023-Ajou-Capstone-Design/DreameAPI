@@ -203,3 +203,8 @@
 	"total": 1
 }
 ```
+
+## 북마커
+### 북마커 추가
+호출 URL  : http://3.130.31.88:5000/Bookmark/add?StoreID=5064&StoreType=1&UserID=Tester  
+결과 예시 : sucess
