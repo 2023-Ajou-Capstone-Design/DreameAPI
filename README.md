@@ -156,3 +156,7 @@
 ### 글등록
 호출 URL : http://3.130.31.88:5000/StoreDetail?StoreID=5064&StoreType=1 
 결과예시 : sucess
+
+### 글등록
+호출 URL : http://3.130.31.88:5000/FoodShare/del?UserID=Tester&WritingID=2023-04-09%2012%3A32%3A32.0000
+결과예시 : sucess
