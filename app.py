@@ -301,10 +301,24 @@ def FoodShareAdd():
     
     return "sucess"
 
-# ## 글 삭제
-# @app.route("/FoodShare/del",methods=["POST"])
-# def FoodShareDel():
-#     pass
+## 글 삭제
+@app.route("/FoodShare/del",methods=["POST"])
+def FoodShareDel():
+    uid = request.values.get("UserID")
+    wid = request.values.get("WritingID")
+    
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    cur = con.cursor()
+    sql = "DELETE FROM FoodShare WHERE (UserID like %s AND WritingID = %s)"
+    cur.execute(sql,(uid,wid))
+    
+    con.commit()
+    
+    con.close()
+    
+    return "sucess"
 
 # ## 글 상세
 # @app.route("/FoodShare/Detail",methods = ["POST"])
