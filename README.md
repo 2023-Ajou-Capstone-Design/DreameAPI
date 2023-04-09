@@ -154,9 +154,30 @@
 
 ## 푸드쉐어링
 ### 글등록
-호출 URL : http://3.130.31.88:5000/StoreDetail?StoreID=5064&StoreType=1 
+호출 URL : http://3.130.31.88:5000/StoreDetail?StoreID=5064&StoreType=1  
 결과예시 : sucess
 
 ### 글등록
-호출 URL : http://3.130.31.88:5000/FoodShare/del?UserID=Tester&WritingID=2023-04-09%2012%3A32%3A32.0000
+호출 URL : http://3.130.31.88:5000/FoodShare/del?UserID=Tester&WritingID=2023-04-09%2012%3A32%3A32.0000  
 결과예시 : sucess
+
+### 글상세
+호출 URL : http://3.130.31.88:5000/FoodShare/Detail?UserID=Tester&WritingID=2023-04-09%2012%3A33%3A31.0000  
+결과예시 : 
+```json
+{
+	"items": [
+		{
+			"Contents": "None",
+			"Photo1": "",
+			"Photo2": "",
+			"Photo3": "",
+			"Title": "test입니다.",
+			"UploadTime": "2023-04-09 12:33:31",
+			"UserID": "Tester",
+			"WritingID": "2023-04-09 12:33:31"
+		}
+	],
+	"total": 1
+}
+```
