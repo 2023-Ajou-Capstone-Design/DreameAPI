@@ -150,3 +150,9 @@
 	"total": 1
 }
 ```
+
+
+## 푸드쉐어링
+### 글등록
+호출 URL : http://3.130.31.88:5000/StoreDetail?StoreID=5064&StoreType=1 
+결과예시 : sucess
