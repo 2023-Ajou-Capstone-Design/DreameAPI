@@ -181,3 +181,25 @@
 	"total": 1
 }
 ```
+
+## 마이페이지
+### 내가 쓴글
+호출 URL : http://3.130.31.88:5000/MyPage/myList?UserID=Tester  
+결과 예시 : 
+```json
+{
+	"items": [
+		{
+			"Contents": "None",
+			"Photo1": "",
+			"Photo2": "",
+			"Photo3": "",
+			"Title": "test입니다.",
+			"UploadTime": "2023-04-09 12:33:31",
+			"UserID": "Tester",
+			"WritingID": "2023-04-09 12:33:31"
+		}
+	],
+	"total": 1
+}
+```
