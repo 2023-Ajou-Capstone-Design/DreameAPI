@@ -286,7 +286,22 @@ def BookmarkAdd():
 ## 북마커 삭제
 @app.route("/Bookmark/del",methods=["POST"])
 def BookmarkDel():
-    pass
+    uid = request.values.get("UserID")
+    sid = request.values.get("StoreID")
+    stype = request.values.get("StoreType")
+    
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    cur = con.cursor()
+    sql = "DELETE FROM Bookmarks WHERE (UserID like %s AND StoreID like %s AND StoreType like %s)"
+    cur.execute(sql,(uid,sid,stype))
+    
+    con.commit()
+    
+    con.close()
+    
+    return "sucess"
 
 ## 북마커 리스트
 @app.route("/Bookmark/list",methods=["POST"])
