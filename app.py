@@ -320,39 +320,39 @@ def FoodShareDel():
     
     return "sucess"
 
-# ## 글 상세
-# @app.route("/FoodShare/Detail",methods = ["POST"])
-# def FoodDetail():
-#     #인자 받기
-#     wID = request.values.get('WritingID')
-#     uID = request.values.get('UserID')
+## 글 상세
+@app.route("/FoodShare/Detail",methods = ["POST"])
+def FoodDetail():
+    #인자 받기
+    wID = request.values.get('WritingID')
+    uID = request.values.get('UserID')
          
-#     con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
-#                             user='dreameAdmin', password='dreame9785',
-#                             db='Dreame', charset='utf8')
-#     cur = con.cursor()
-#     sql = "SELECT * FROM FoodShare WHERE (WritingID = %s AND UserID like %s)"
-#     cur.execute(sql,(wID, uID))
+    con = pymysql.connect(host='dreame.ceneilkum8gx.us-east-2.rds.amazonaws.com', 
+                            user='dreameAdmin', password='dreame9785',
+                            db='Dreame', charset='utf8')
+    cur = con.cursor()
+    sql = "SELECT * FROM FoodShare WHERE (WritingID = %s AND UserID like %s)"
+    cur.execute(sql,(wID, uID))
     
-#     rows = cur.fetchall()
-#     keys = ("WritingID","UploadTime","Title","Contents","Photo1","Photo2","Photo3","UserID")
-#     items = [dict(zip(keys,row)) for row in rows]
-#     for item in items :
+    rows = cur.fetchall()
+    keys = ("WritingID","UploadTime","Title","Contents","Photo1","Photo2","Photo3","UserID")
+    items = [dict(zip(keys,row)) for row in rows]
+    for item in items :
         
-#         item["WritingID"] = str(item["WritingID"])
-#         item["UploadTime"] = str(item["UploadTime"])
-#         item["Title"] = str(item["Title"])
-#         item["Contents"] = str(item["Contents"])
-#         item["Photo1"] = base64ToString(item["Photo1"])
-#         item["Photo2"] = base64ToString(item["Photo2"])
-#         item["Photo3"] = base64ToString(item["Photo3"])
-#         item["UserID"] = str(item["UserID"])
-#     con.close()
+        item["WritingID"] = str(item["WritingID"])
+        item["UploadTime"] = str(item["UploadTime"])
+        item["Title"] = str(item["Title"])
+        item["Contents"] = str(item["Contents"])
+        item["Photo1"] = base64ToString(item["Photo1"])
+        item["Photo2"] = base64ToString(item["Photo2"])
+        item["Photo3"] = base64ToString(item["Photo3"])
+        item["UserID"] = str(item["UserID"])
+    con.close()
     
-#     return{
-#         "total" : len(rows),
-#         "items" : items
-#     }
+    return{
+        "total" : len(rows),
+        "items" : items
+    }
 
 # ## 글 리스트
 # @app.route("/FoodShare/getList",methods=["POST"])
