@@ -1,26 +1,27 @@
-from flask import Flask, request
-from flask_restx import Api
-import pymysql
+from flask import Flask
+
 import base64
 import datetime as dt
 import json
-from API.test import Test
+
+from API import MAP
+
 
 
 app = Flask(__name__)
-api = Api(app)
-api.add_resource(Test, "/test")
+app.register_blueprint(MAP.map_bp)
 
 
 
-def stringToBase64(s) :
-    return base64.b64encode(s.encode("utf-8"))
 
-def base64ToString(b):
-    try :
-        return base64.b64decode(b).decode("utf-8")
-    except :
-        return ""
+# def stringToBase64(s) :
+#     return base64.b64encode(s.encode("utf-8"))
+
+# def base64ToString(b):
+#     try :
+#         return base64.b64decode(b).decode("utf-8")
+#     except :
+#         return ""
 
 
 

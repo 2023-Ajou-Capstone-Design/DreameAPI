@@ -4,7 +4,7 @@
 
 ## 지도
 ### 마커 띄우기
-호출 URL : POST http://3.130.31.88:5000/MyPosition?myPositionLng=127.043517&myPositionLat=37.28224800000001&mbr=5000  
+호출 URL : POST http://3.130.31.88:5000/map/MyPosition?myPositionLng=127.043517&myPositionLat=37.28224800000001&mbr=5000  
 결과 예시 : 
 ```json
 {
@@ -24,7 +24,7 @@
 
 ### 카테고리 선택시
 #### 대분류 카테고리 선택
-호출 URL : POST http://3.130.31.88:5000/Choose/Category?Category=2&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
+호출 URL : POST http://3.130.31.88:5000/map/Choose/Category?Category=2&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
 결과예시 : 
 ```json
 {
@@ -47,7 +47,7 @@
 }
 ```
 #### 소분류 카테고리 선택
-호출 URL : POST http://3.130.31.88:5000/Choose/SubCategory?Category=2&SubCategory=2&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
+호출 URL : POST http://3.130.31.88:5000/map/Choose/SubCategory?Category=2&SubCategory=2&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
 결과 예시 :
 ```json
 {
@@ -72,7 +72,7 @@
 ```
 
 #### 가게유형 선택
-호출 URL : POST http://3.130.31.88:5000/Choose/StoreType?StoreType=1&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
+호출 URL : POST http://3.130.31.88:5000/map/Choose/StoreType?StoreType=1&myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000  
 결과 예시 :
 ```json
 {
@@ -96,7 +96,7 @@
 
 ```
 ### 키워드 검색
-호출 URL : http://3.130.31.88:5000/KeywordSearch?myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000&Keyword=%EC%8A%A4%EC%8B%9C  
+호출 URL : http://3.130.31.88:5000/map/KeywordSearch?myPositionLng=127.043517&myPositionLat=37.28224&mbr=5000&Keyword=%EC%8A%A4%EC%8B%9C  
 결과 예시 :
 ```json
 {
@@ -120,7 +120,7 @@
 ```
 
 ### 마커 클릭 혹은 가게 클릭시
-호출 URL : http://3.130.31.88:5000/StoreDetail?StoreID=5064&StoreType=1  
+호출 URL : http://3.130.31.88:5000/map/StoreDetail?StoreID=5064&StoreType=1  
 결과 예시 :  
 ```json
 {
