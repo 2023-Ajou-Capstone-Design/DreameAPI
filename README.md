@@ -212,3 +212,32 @@
 ### 북마커 삭제
 호출 URL  : http://3.130.31.88:5000/Bookmark/del?StoreID=5064&StoreType=1&UserID=Tester  
 결과 예시 : sucess
+
+### 북마커 조회
+호출 URL : http://3.130.31.88:5000/Bookmark/list?UserID=Tester  
+결과 예시 :
+```json
+{
+	"items": [
+		{
+			"CateName": "식음료",
+			"StoreID": 5063,
+			"StorePhoto": "",
+			"StorePointLat": 37.2795568,
+			"StorePointLng": 127.0312058,
+			"StoreType": "1",
+			"SubCateNameStoreName": "기타"
+		},
+		{
+			"CateName": "식음료",
+			"StoreID": 5064,
+			"StorePhoto": "",
+			"StorePointLat": 37.27883002,
+			"StorePointLng": 127.0435057,
+			"StoreType": "1",
+			"SubCateNameStoreName": "기타"
+		}
+	],
+	"total": 2
+}
+```
