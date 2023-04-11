@@ -76,4 +76,24 @@ def FoodDetail():
 
 ## 글 조회
 
+
 ## 글 수정
+@food_bp.route("/Modify",methods=["POST"])
+def FoodShareModify():
+    #인자 받기
+    p1 = request.values.get("Photo1")
+    p2 = request.values.get("Photo2")
+    p3 = request.values.get("Photo3")
+    title = request.values.get("Title")
+    contents = request.values.get("Contents")
+    userID = request.values.get("UserID")
+    wID = request.values.get("WritingID")
+    town = request.values.get("Town")
+    
+    sql = "UPDATE FoodShare SET UploadTime = now(), Photo1 =%s, Photo2 = %s, Photo3 = %s, Title = %s, Contents = %s, Town = %s\
+           WHERE UserID like %s and WritingID = %s"
+        
+    conn = DB()
+    res = conn.update(sql,(p1,p2,p3,title, contents,town, userID, wID))
+    
+    return res

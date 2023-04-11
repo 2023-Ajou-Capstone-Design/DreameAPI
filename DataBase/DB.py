@@ -37,3 +37,13 @@ class DB :
         self.con.close()
         return "sucess"
     
+    def update(self, sql, args=None) :
+        try :
+            self.cur.execute(sql,args)
+        except : 
+            return "fail"
+        self.con.commit()
+        self.cur.close()
+        self.con.close()
+        return "sucess"
+    
