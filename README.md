@@ -210,6 +210,10 @@
 }
 ```
 
+### 닉네임 변경
+호출 URL : http://3.130.31.88:5000/MyPage/AKA?UserID=Tester&AKA=teste_AKA  
+결과 예시 : sucess
+
 ## 북마커
 ### 북마커 추가
 호출 URL  : http://3.130.31.88:5000/Bookmark/add?StoreID=5064&StoreType=1&UserID=Tester  
