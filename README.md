@@ -187,6 +187,28 @@
 호출 URL : http://3.130.31.88:5000/FoodShare/Modify?UserID=Tester&Title=test%EC%9E%85%EB%8B%88%EB%8B%A4.&contents=%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%A4%91%EC%9D%B4%EC%97%90%EC%9A%94.%20%EB%A7%9B%EB%82%9C%EA%B1%B0%20%EB%A7%8E%EC%9D%B4%20%EB%A8%B9%EC%96%B4%EC%9A%94&Photo1&Photo2&Photo3&WritingID=2023-04-10%2020%3A57%3A04.0000&Town=%EC%88%98%EC%9B%90%EC%8B%9C%20%EC%98%81%ED%86%B5%EA%B5%AC%20%EC%9B%90%EC%B2%9C%EB%8F%99  
 결과 예시 : sucess  
 
+### 글 조회
+호출 URL : http://3.130.31.88:5000/FoodShare/getList?Town=%EC%88%98%EC%9B%90%EC%8B%9C%20%EC%98%81%ED%86%B5%EA%B5%AC%20%EC%9B%90%EC%B2%9C%EB%8F%99  
+결과 예시 :
+```json
+{
+	"items": [
+		{
+			"Contents": "None",
+			"Photo1": "",
+			"Photo2": "",
+			"Photo3": "",
+			"Title": "test입니다.",
+			"Town": "수원시 영통구 원천동",
+			"UploadTime": "2023-04-11 03:51:02",
+			"UserID": "Tester",
+			"WritingID": "2023-04-10 20:57:04"
+		}
+	],
+	"total": 1
+}
+```
+
 ## 마이페이지
 ### 내가 쓴글
 호출 URL : http://3.130.31.88:5000/MyPage/myList?UserID=Tester  
