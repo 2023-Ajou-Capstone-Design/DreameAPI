@@ -52,3 +52,14 @@ def akaChange():
     conn = DB()
     res = conn.update(sql,(aka,uId))
     return res
+
+## 동네 변경
+@mypage_bp.route("/Town",methods = ["POST"])
+def townChange():
+    uId = request.values.get("UserID")
+    town = request.values.get("Town")
+    
+    sql = "UPDATE UserInfo SET Town = %s WHERE UserID like %s"
+    conn = DB()
+    res = conn.update(sql,(town,uId))
+    return res
