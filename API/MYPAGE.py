@@ -41,3 +41,14 @@ def FoodshareMyList():
     }
     
     return jsonify(data)
+
+## 닉네임 변경
+@mypage_bp.route("/AKA",methods = ["POST"])
+def akaChange():
+    uId = request.values.get("UserID")
+    aka = request.values.get("AKA")
+    
+    sql = "UPDATE UserInfo SET AKA = %s WHERE UserID like %s"
+    conn = DB()
+    res = conn.update(sql,(aka,uId))
+    return res
