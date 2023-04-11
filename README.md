@@ -173,9 +173,10 @@
 			"Photo2": "",
 			"Photo3": "",
 			"Title": "test입니다.",
-			"UploadTime": "2023-04-09 12:33:31",
+			"Town": "",
+			"UploadTime": "2023-04-10 20:57:04",
 			"UserID": "Tester",
-			"WritingID": "2023-04-09 12:33:31"
+			"WritingID": "2023-04-10 20:57:04"
 		}
 	],
 	"total": 1
@@ -195,9 +196,10 @@
 			"Photo2": "",
 			"Photo3": "",
 			"Title": "test입니다.",
-			"UploadTime": "2023-04-09 12:33:31",
+			"Town": "",
+			"UploadTime": "2023-04-10 20:57:04",
 			"UserID": "Tester",
-			"WritingID": "2023-04-09 12:33:31"
+			"WritingID": "2023-04-10 20:57:04"
 		}
 	],
 	"total": 1
