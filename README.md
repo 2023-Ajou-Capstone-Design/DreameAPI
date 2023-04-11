@@ -214,6 +214,10 @@
 호출 URL : http://3.130.31.88:5000/MyPage/AKA?UserID=Tester&AKA=teste_AKA  
 결과 예시 : sucess
 
+### 동네 변경
+호출 URL : http://3.130.31.88:5000/MyPage/Town?UserID=Tester&Town=%EC%88%98%EC%9B%90%EC%8B%9C%20%EC%98%81%ED%86%B5%EA%B5%AC%20%EC%9A%B0%EB%A7%8C%EB%8F%99   
+결과 예시 : sucess
+
 ## 북마커
 ### 북마커 추가
 호출 URL  : http://3.130.31.88:5000/Bookmark/add?StoreID=5064&StoreType=1&UserID=Tester  
