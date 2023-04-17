@@ -47,15 +47,7 @@ def BookmarkDel():
 def BookmarkList():
     uid = request.values.get("UserID")
     
-    sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
-            Tag.CateName, Tag.SubCateName,  StoreDetail.StoreName,StoreDetail.StorePhoto\
-            FROM Bookmarks\
-            INNER JOIN StoreDetail ON(StoreDetail.StoreID like Bookmarks.StoreID AND StoreDetail.StoreType like Bookmarks.StoreType)\
-            INNER JOIN StoreInfo ON(StoreInfo.StoreID like Bookmarks.StoreID AND StoreInfo.StoreType like Bookmarks.StoreType)\
-            INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
-            WHERE Bookmarks.UserID like %s"
-    
-    # sql = bookmark_sql.get("list")
+    sql = bookmark_sql.get("list")
     conn = DB()
     rows = conn.select(sql,(uid))
     
