@@ -40,7 +40,6 @@ def myposition():
     
     return jsonify(data)
 
-
 ## 카테고리 선택했을 때
 ### 대분류 카테고리 선택했을때
 @map_bp.route("/Choose/Category",methods=["POST"])
