@@ -78,22 +78,19 @@ def FoodDetail():
 @food_bp.route("/getList",methods = ["POST"])
 def FoodShareGetList():
     town = request.values.get("Town")
-    sql = "SELECT * FROM FoodShare WHERE (Town like %s)"
+    sql = "SELECT WritingID, UploadTime, Title, Photo1, UserID, Town FROM FoodShare WHERE (Town like %s)"
     
     conn = DB()
     rows = conn.select(sql,(town))
     
-    keys = ("WritingID","UploadTime","Title","Contents","Photo1","Photo2","Photo3","UserID","Town")
+    keys = ("WritingID","UploadTime","Title","Photo1","UserID","Town")
     items = [dict(zip(keys,row)) for row in rows]
     
     for item in items :
         item["WritingID"] = str(item["WritingID"])
         item["UploadTime"] = str(item["UploadTime"])
         item["Title"] = str(item["Title"])
-        item["Contents"] = str(item["Contents"])
         item["Photo1"] = base64ToString(item["Photo1"])
-        item["Photo2"] = base64ToString(item["Photo2"])
-        item["Photo3"] = base64ToString(item["Photo3"])
         item["UserID"] = str(item["UserID"])
         
     data = {
