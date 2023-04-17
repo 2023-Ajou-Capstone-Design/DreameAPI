@@ -3,5 +3,12 @@
         "add" : "INSERT INTO Dreame.Bookmarks(UserID,StoreID,StoreType) VALUES(%s,%s,%s)",
         "del" : "DELETE FROM Dreame.Bookmarks WHERE (UserID like %s AND StoreID like %s AND StoreType like %s)",
         "list" : "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,Tag.CateName, Tag.SubCateName,  StoreDetail.StoreName,StoreDetail.StorePhoto FROM Dreame.Bookmarks INNER JOIN Dreame.StoreDetail ON(StoreDetail.StoreID like Bookmarks.StoreID AND StoreDetail.StoreType like Bookmarks.StoreType) INNER JOIN Dreame.StoreInfo ON(StoreInfo.StoreID like Bookmarks.StoreID AND StoreInfo.StoreType like Bookmarks.StoreType)INNER JOIN Dreame.Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory) WHERE Bookmarks.UserID like %s"
+    },
+    "FoodShare" :{
+        "add" : "INSERT INTO Dreame.FoodShare(WritingID, UploadTime, Title, Contents, Photo1, Photo2, Photo3,UserID,Town) VALUES(now(), now(), %s,%s,%s,%s,%s,%s,%s)",
+        "del" : "DELETE FROM Dreame.FoodShare WHERE (UserID like %s AND WritingID = %s)",
+        "detail" : "SELECT WritingID,UploadTime,Title,Contents,Photo1,Photo2,Photo3,UserID FROM Dreame.FoodShare WHERE (WritingID = %s AND UserID like %s)",
+        "getList" : "SELECT WritingID, UploadTime, Title, Photo1, UserID, Town FROM Dreame.FoodShare WHERE (Town like %s)",
+        "modify" : "UPDATE Dreame.FoodShare SET UploadTime = now(), Photo1 =%s, Photo2 = %s, Photo3 = %s, Title = %s, Contents = %s, Town = %s WHERE UserID like %s and WritingID = %s"
     }
 }

@@ -2,8 +2,12 @@ from flask import Blueprint,request,jsonify
 import base64
 from DataBase.DB import DB
 import base64
+import json
 
 food_bp = Blueprint('foodshare', __name__, url_prefix='/FoodShare')
+file = open("DataBase/sql.json",encoding = "UTF-8")
+sql = json.loads(file.read())
+food_sql = sql.get("FoodShare")
 
 def base64ToString(b):
     try :
@@ -23,8 +27,7 @@ def FoodShareAdd():
     userID = request.values.get("UserID")
     town = request.values.get("Town")
     
-    sql = "INSERT INTO FoodShare(WritingID, UploadTime, Title, Contents, Photo1, Photo2, Photo3,UserID,Town)\
-        VALUES(now(), now(), %s,%s,%s,%s,%s,%s,%s)"
+    sql = food_sql.get("add")
         
     conn = DB()
     res = conn.insert(sql,(title, contents,p1,p2,p3,userID,town))
@@ -38,7 +41,7 @@ def FoodShareDel():
     uid = request.values.get("UserID")
     wid = request.values.get("WritingID")
     
-    sql = "DELETE FROM FoodShare WHERE (UserID like %s AND WritingID = %s)"
+    sql = food_sql.get("del")
     conn=DB()
     res = conn.delete(sql,(uid,wid))
         
@@ -51,7 +54,7 @@ def FoodDetail():
     wID = request.values.get('WritingID')
     uID = request.values.get('UserID')
     
-    sql = "SELECT * FROM FoodShare WHERE (WritingID = %s AND UserID like %s)"
+    sql = food_sql.get("detail")
     conn = DB()
     rows = conn.select(sql,(wID, uID))
     
@@ -78,7 +81,8 @@ def FoodDetail():
 @food_bp.route("/getList",methods = ["POST"])
 def FoodShareGetList():
     town = request.values.get("Town")
-    sql = "SELECT WritingID, UploadTime, Title, Photo1, UserID, Town FROM FoodShare WHERE (Town like %s)"
+    
+    sql = food_sql.get("getList")
     
     conn = DB()
     rows = conn.select(sql,(town))
@@ -114,8 +118,9 @@ def FoodShareModify():
     wID = request.values.get("WritingID")
     town = request.values.get("Town")
     
-    sql = "UPDATE FoodShare SET UploadTime = now(), Photo1 =%s, Photo2 = %s, Photo3 = %s, Title = %s, Contents = %s, Town = %s\
-           WHERE UserID like %s and WritingID = %s"
+    # sql = "UPDATE FoodShare SET UploadTime = now(), Photo1 =%s, Photo2 = %s, Photo3 = %s, Title = %s, Contents = %s, Town = %s\
+    #        WHERE UserID like %s and WritingID = %s"
+    sql = food_sql.get("modify")
         
     conn = DB()
     res = conn.update(sql,(p1,p2,p3,title, contents,town, userID, wID))
