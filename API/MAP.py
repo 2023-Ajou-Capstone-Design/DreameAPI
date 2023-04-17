@@ -1,9 +1,12 @@
 from flask import Blueprint,request,jsonify
 import base64
 from DataBase.DB import DB
+import json
 
 map_bp = Blueprint('map', __name__, url_prefix='/map')
-
+file = open("DataBase/sql.json",encoding = "UTF-8")
+sql = json.loads(file.read())
+map_sql = sql.get("Map")
 
 def base64ToString(b):
     try :
@@ -20,15 +23,9 @@ def myposition():
     myLat = request.values.get('myPositionLat')
     mbr = request.values.get('mbr')
     
-    sql = f"SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,StoreDetail.StoreName,\
-            ST_Distance_Sphere(POINT({myLng},{myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
-            FROM StoreInfo\
-            INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType like StoreDetail.StoreType)\
-            WHERE ST_Distance_Sphere(POINT({myLng}, {myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= {mbr}\
-            ORDER BY Distance LIMIT 50"
-    
+    sql = map_sql.get("MyPosition")
     conn = DB()
-    rows = conn.select(sql)
+    rows = conn.select(sql,(myLng,myLat,myLng,myLat,mbr))
     
     keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat","StoreName","Distance")
     items = [dict(zip(keys,row)) for row in rows]
@@ -50,19 +47,9 @@ def ChooseCategory() :
     myLat = request.values.get('myPositionLat')
     mbr = request.values.get('mbr')
     
-    sql = f"SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
-            Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory, StoreDetail.StorePhoto\
-            , StoreDetail.StoreName,\
-            ST_Distance_Sphere(POINT({myLng}, {myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
-            FROM StoreInfo\
-            INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
-            INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
-            WHERE ST_Distance_Sphere(POINT({myLng}, {myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= {mbr}\
-            AND StoreInfo.Category like {cate}\
-            ORDER BY Distance LIMIT 50"
-    
+    sql = map_sql.get("ChooseCate")
     conn = DB()
-    rows = conn.select(sql)
+    rows = conn.select(sql,(myLng,myLat,myLng,myLat,mbr,cate))
     
     keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat",
             "CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
@@ -88,20 +75,9 @@ def ChooseSubCategory() :
     myLat = request.values.get('myPositionLat')
     mbr = request.values.get('mbr')
     
-    
-    sql = f"SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
-            Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory, StoreDetail.StorePhoto\
-            , StoreDetail.StoreName,\
-            ST_Distance_Sphere(POINT({myLng}, {myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
-            FROM StoreInfo\
-            INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
-            INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
-            WHERE ST_Distance_Sphere(POINT({myLng}, {myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= {mbr}\
-            AND StoreInfo.Category like {cate} AND StoreInfo.SubCategory like {subcate}\
-            ORDER BY Distance LIMIT 50"
-    
+    sql = map_sql.get("ChooseSub")
     conn = DB()
-    rows = conn.select(sql)
+    rows = conn.select(sql,(myLng,myLat,myLng,myLat,mbr,cate,subcate))
     
     keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat",
             "CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
@@ -127,19 +103,9 @@ def ChooseStoreType() :
     myLat = request.values.get('myPositionLat')
     mbr = request.values.get('mbr')
     
-    sql = f"SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,\
-            Tag.CateName, Tag.SubCateName, StoreInfo.Category, StoreInfo.SubCategory, StoreDetail.StorePhoto\
-            , StoreDetail.StoreName,\
-            ST_Distance_Sphere(POINT({myLng}, {myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
-            FROM StoreInfo\
-            INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
-            INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
-            WHERE ST_Distance_Sphere(POINT({myLng}, {myLat}),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= {mbr}\
-            AND StoreInfo.StoreType like {storeType}\
-            ORDER BY Distance LIMIT 50"
-    
+    sql = map_sql.get("ChooseStoreType")
     conn = DB()
-    rows = conn.select(sql)
+    rows = conn.select(sql,(myLng,myLat,myLng,myLat,mbr,storeType))
     
     keys = ("StoreID", "StoreType", "StorePointLng","StorePointLat",
             "CateName","SubCateName","Category","SubCategory","StorePhoto","StoreName","Distance")
@@ -164,16 +130,7 @@ def KeywordSearch():
     myLat = request.values.get('myPositionLat')
     mbr = request.values.get('mbr')
     
-    sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreDetail.StorePhoto, StoreDetail.StoreName,\
-           Tag.CateName, Tag.SubCateName, StoreInfo.StorePointLng, StoreInfo.StorePointLat, StoreInfo.Category, StoreInfo.SubCategory,\
-           ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) AS Distance\
-           FROM StoreInfo\
-           INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
-           INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
-           WHERE (ST_Distance_Sphere(POINT(%s, %s),POINT(StoreInfo.StorePointLng, StoreInfo.StorePointLat)) <= %s AND\
-           (StoreDetail.StoreName like  CONCAT('%%', %s, '%%') OR Tag.CateName like  CONCAT('%%', %s, '%%') OR Tag.SubCateName like  CONCAT('%%', %s, '%%')))\
-            ORDER BY Distance LIMIT 50"
-    
+    sql = map_sql.get("KeywordSearch")
     conn = DB()
     rows = conn.select(sql,(myLng,myLat,myLng,myLat,mbr,keyword,keyword,keyword))
     
@@ -196,16 +153,7 @@ def StoreDetail():
     id = request.values.get('StoreID')
     storeType = request.values.get('StoreType')
     
-    sql = "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreDetail.StorePhoto, StoreDetail.StoreName,\
-           Tag.CateName, Tag.SubCateName, StoreDetail.Address, StoreDetail.DetailAddress,\
-           StoreDetail.DayStart,StoreDetail.DayFinish, StoreDetail.SatStart, StoreDetail.SatFinish,\
-           StoreDetail.HoliStart, StoreDetail.HoliFinish, StoreDetail.Item, StoreDetail.Provided1, StoreDetail.Provided2,\
-           StoreDetail.Phone, StoreDetail.WorkDay\
-           FROM StoreInfo\
-           INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
-           INNER JOIN StoreDetail ON (StoreInfo.StoreID = StoreDetail.StoreID AND StoreInfo.StoreType = StoreDetail.StoreType)\
-           WHERE (StoreInfo.StoreID = %s AND StoreInfo.StoreType like %s)"
-    
+    sql = map_sql.get("StoreDetail")
     conn = DB()
     rows = conn.select(sql,(id,storeType))
     
