@@ -3,8 +3,12 @@ from flask import Blueprint,request,jsonify
 import base64
 from DataBase.DB import DB
 import base64
+import json
 
 mypage_bp = Blueprint('mypage', __name__, url_prefix='/MyPage')
+file = open("DataBase/sql.json",encoding = "UTF-8")
+sql = json.loads(file.read())
+mypage_sql = sql.get("MyPage")
 
 def base64ToString(b):
     try :
@@ -18,7 +22,7 @@ def base64ToString(b):
 def FoodshareMyList():
     uID = request.values.get('UserID')
     
-    sql = "SELECT * FROM FoodShare WHERE (UserID like %s)"
+    sql = mypage_sql.get("myList")
     conn = DB()
     rows = conn.select(sql,( uID))
     
@@ -48,7 +52,7 @@ def akaChange():
     uId = request.values.get("UserID")
     aka = request.values.get("AKA")
     
-    sql = "UPDATE UserInfo SET AKA = %s WHERE UserID like %s"
+    sql = mypage_sql.get("AKA")
     conn = DB()
     res = conn.update(sql,(aka,uId))
     return res
@@ -59,7 +63,7 @@ def townChange():
     uId = request.values.get("UserID")
     town = request.values.get("Town")
     
-    sql = "UPDATE UserInfo SET Town = %s WHERE UserID like %s"
+    sql = mypage_sql.get("Town")
     conn = DB()
     res = conn.update(sql,(town,uId))
     return res
