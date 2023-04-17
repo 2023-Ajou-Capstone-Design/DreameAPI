@@ -1,8 +1,12 @@
 from flask import Blueprint,request,jsonify
 import base64
 from DataBase.DB import DB
+import json
 
 login_bp = Blueprint('login', __name__, url_prefix='/LogIn')
+file = open("DataBase/sql.json",encoding = "UTF-8")
+sql = json.loads(file.read())
+login_sql = sql.get("LogIn")
 
 def base64ToString(b):
     try :
@@ -22,8 +26,7 @@ def login():
     profile = request.values.get('Profile')
     
     conn = DB()
-    sql = "INSERT INTO Dreame.UserInfo(UserID,AKA,UserType,Card,Town,UserPhoto)\
-        VALUES(%s,%s,%s,%s,%s,%s)"
+    sql = login_sql.get("/")
     res = conn.insert(sql,(account,aka,uType,card,town,profile))
     
     return res
