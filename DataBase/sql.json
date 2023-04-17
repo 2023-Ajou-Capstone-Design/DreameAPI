@@ -1,0 +1,7 @@
+{
+    "BookMark" :{
+        "add" : "INSERT INTO Dreame.Bookmarks(UserID,StoreID,StoreType) VALUES(%s,%s,%s)",
+        "del" : "DELETE FROM Dreame.Bookmarks WHERE (UserID like %s AND StoreID like %s AND StoreType like %s)",
+        "list" : "SELECT StoreInfo.StoreID, StoreInfo.StoreType, StoreInfo.StorePointLng, StoreInfo.StorePointLat,Tag.CateName, Tag.SubCateName,  StoreDetail.StoreName,StoreDetail.StorePhoto FROM Dreame.Bookmarks INNER JOIN Dreame.StoreDetail ON(StoreDetail.StoreID like Bookmarks.StoreID AND StoreDetail.StoreType like Bookmarks.StoreType) INNER JOIN Dreame.StoreInfo ON(StoreInfo.StoreID like Bookmarks.StoreID AND StoreInfo.StoreType like Bookmarks.StoreType)INNER JOIN Dreame.Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory) WHERE Bookmarks.UserID like %s"
+    }
+}

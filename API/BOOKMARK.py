@@ -2,9 +2,12 @@ from flask import Blueprint,request,jsonify
 import base64
 from DataBase.DB import DB
 import base64
+import json
 
 bookmark_bp = Blueprint('bookmark', __name__, url_prefix='/Bookmark')
-
+file = open("DataBase/sql.json",encoding = "UTF-8")
+sql = json.loads(file.read())
+bookmark_sql = sql.get("BookMark")
 
 def base64ToString(b):
     try :
@@ -20,8 +23,7 @@ def BookmarkAdd():
     stype = request.values.get("StoreType")
     
     conn = DB()
-    sql = "INSERT INTO Bookmarks(UserID,StoreID,StoreType)\
-        VALUES(%s,%s,%s)"
+    sql = bookmark_sql.get("add")
     res = conn.insert(sql,(uid,sid,stype))
     
     return res
@@ -33,7 +35,7 @@ def BookmarkDel():
     sid = request.values.get("StoreID")
     stype = request.values.get("StoreType")
     
-    sql = "DELETE FROM Bookmarks WHERE (UserID like %s AND StoreID like %s AND StoreType like %s)"
+    sql = bookmark_sql.get("del")
     
     conn = DB()
     res = conn.delete(sql,(uid,sid,stype))
@@ -52,6 +54,8 @@ def BookmarkList():
             INNER JOIN StoreInfo ON(StoreInfo.StoreID like Bookmarks.StoreID AND StoreInfo.StoreType like Bookmarks.StoreType)\
             INNER JOIN Tag ON (StoreInfo.Category like Tag.Category AND StoreInfo.SubCategory like Tag.SubCategory)\
             WHERE Bookmarks.UserID like %s"
+    
+    # sql = bookmark_sql.get("list")
     conn = DB()
     rows = conn.select(sql,(uid))
     
