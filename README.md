@@ -157,7 +157,7 @@
 호출 URL : http://3.130.31.88:5000/StoreDetail?StoreID=5064&StoreType=1  
 결과예시 : sucess
 
-### 글등록
+### 글삭제
 호출 URL : http://3.130.31.88:5000/FoodShare/del?UserID=Tester&WritingID=2023-04-09%2012%3A32%3A32.0000  
 결과예시 : sucess
 
@@ -194,10 +194,7 @@
 {
 	"items": [
 		{
-			"Contents": "None",
 			"Photo1": "",
-			"Photo2": "",
-			"Photo3": "",
 			"Title": "test입니다.",
 			"Town": "수원시 영통구 원천동",
 			"UploadTime": "2023-04-11 03:51:02",
