@@ -160,7 +160,7 @@ def StoreDetail():
     keys = ("StoreID","StoreType","StorePhoto","StoreName",
             "CateName","SubCateName","Address","DetailAddress",
             "DayStart","DayFinish","SatStart","SatFinish","HoliStart","HoliFinish",
-            "Item","Provided1","Provided2","Phone","WorkDay")
+            "Item","Provided1","Provided2","Phone","WorkDay","StorePointLng","StorePointLat")
     items = [dict(zip(keys,row)) for row in rows]
     for item in items :
         item["StorePhoto"] = base64ToString(item["StorePhoto"])
