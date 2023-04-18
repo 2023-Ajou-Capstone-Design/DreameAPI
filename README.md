@@ -255,20 +255,22 @@
 		{
 			"CateName": "식음료",
 			"StoreID": 5063,
+			"StoreName": "월드전&막걸리",
 			"StorePhoto": "",
 			"StorePointLat": 37.2795568,
 			"StorePointLng": 127.0312058,
 			"StoreType": "1",
-			"SubCateNameStoreName": "기타"
+			"SubCateName": "기타"
 		},
 		{
 			"CateName": "식음료",
 			"StoreID": 5064,
+			"StoreName": "엉클돈까스",
 			"StorePhoto": "",
 			"StorePointLat": 37.27883002,
 			"StorePointLng": 127.0435057,
 			"StoreType": "1",
-			"SubCateNameStoreName": "기타"
+			"SubCateName": "기타"
 		}
 	],
 	"total": 2
