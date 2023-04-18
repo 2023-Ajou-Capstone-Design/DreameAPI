@@ -120,13 +120,13 @@
 ```
 
 ### 마커 클릭 혹은 가게 클릭시
-호출 URL : http://3.130.31.88:5000/map/StoreDetail?StoreID=5064&StoreType=1  
+호출 URL : http://3.130.31.88:5000/map/StoreDetail?StoreID=1&StoreType=1  
 결과 예시 :  
 ```json
 {
 	"items": [
 		{
-			"Address": "경기도 수원시 팔달구 아주로 43-1",
+			"Address": "경기도 수원시 장안구 팔달로 273",
 			"CateName": "식음료",
 			"DayFinish": "0:00:00",
 			"DayStart": "0:00:00",
@@ -134,14 +134,16 @@
 			"HoliFinish": "0:00:00",
 			"HoliStart": "0:00:00",
 			"Item": "",
-			"Phone": "031-216-8579",
+			"Phone": "0507-1348-7079",
 			"Provided1": "",
 			"Provided2": "",
 			"SatFinish": "0:00:00",
 			"SatStart": "0:00:00",
-			"StoreID": 5064,
-			"StoreName": "엉클돈까스",
+			"StoreID": 1,
+			"StoreName": "보용만두",
 			"StorePhoto": "",
+			"StorePointLat": 37.28969219,
+			"StorePointLng": 127.0146461,
 			"StoreType": "1",
 			"SubCateName": "기타",
 			"WorkDay": ""
