@@ -51,7 +51,7 @@ def BookmarkList():
     conn = DB()
     rows = conn.select(sql,(uid))
     
-    keys = ("StoreID","StoreType","StorePointLng","StorePointLat","CateName","SubCateName""StoreName","StorePhoto")
+    keys = ("StoreID","StoreType","StorePointLng","StorePointLat","CateName","SubCateName","StoreName","StorePhoto")
     items = [dict(zip(keys,row)) for row in rows]
     for item in items :
         item["StorePhoto"] = base64ToString(item["StorePhoto"])
