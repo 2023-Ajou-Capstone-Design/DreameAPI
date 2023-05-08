@@ -26,7 +26,7 @@ def FoodshareMyList():
     conn = DB()
     rows = conn.select(sql,( uID))
     
-    keys = ("WritingID","UploadTime","Title","Contents","Photo1","Photo2","Photo3","UserID","Town")
+    keys = ("WritingID","UploadTime","Title","Contents","Photo1","UserID","Town")
     items = [dict(zip(keys,row)) for row in rows]
     for item in items :
         
@@ -35,8 +35,6 @@ def FoodshareMyList():
         item["Title"] = str(item["Title"])
         item["Contents"] = str(item["Contents"])
         item["Photo1"] = base64ToString(item["Photo1"])
-        item["Photo2"] = base64ToString(item["Photo2"])
-        item["Photo3"] = base64ToString(item["Photo3"])
         item["UserID"] = str(item["UserID"])
         
     data = {

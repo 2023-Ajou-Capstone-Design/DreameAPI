@@ -18,12 +18,12 @@ def base64ToString(b):
 @login_bp.route('/',methods = ["POST"])
 def login():
     #인자 받기
-    account = request.values.get('Account')
+    account = request.values.get('UserID')
     aka = request.values.get('AKA')
     town = request.values.get('Town')
     uType = request.values.get('userType')
     card = request.values.get('Card')
-    profile = request.values.get('Profile')
+    profile = request.values.get('UserPhoto')
     
     conn = DB()
     sql = login_sql.get("/")

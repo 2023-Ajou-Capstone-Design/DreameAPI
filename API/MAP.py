@@ -152,15 +152,16 @@ def StoreDetail():
     #인자 받기
     id = request.values.get('StoreID')
     storeType = request.values.get('StoreType')
+    uID = request.values.get("UserID")
     
     sql = map_sql.get("StoreDetail")
     conn = DB()
-    rows = conn.select(sql,(id,storeType))
+    rows = conn.select(sql,(uID,id,storeType))
     
     keys = ("StoreID","StoreType","StorePhoto","StoreName",
             "CateName","SubCateName","Address","DetailAddress",
             "DayStart","DayFinish","SatStart","SatFinish","HoliStart","HoliFinish",
-            "Item","Provided1","Provided2","Phone","WorkDay","StorePointLng","StorePointLat")
+            "Item","Provided1","Provided2","Phone","WorkDay","StorePointLng","StorePointLat","Bookmarked")
     items = [dict(zip(keys,row)) for row in rows]
     for item in items :
         item["StorePhoto"] = base64ToString(item["StorePhoto"])
