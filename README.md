@@ -120,7 +120,7 @@
 ```
 
 ### 마커 클릭 혹은 가게 클릭시
-호출 URL : http://3.130.31.88:5000/map/StoreDetail?StoreID=1&StoreType=1  
+호출 URL : http://3.130.31.88:5000/map/StoreDetail?StoreID=1&StoreType=1&UserID=Tester  
 결과 예시 :  
 ```json
 {
@@ -146,7 +146,8 @@
 			"StorePointLng": 127.0146461,
 			"StoreType": "1",
 			"SubCateName": "기타",
-			"WorkDay": ""
+			"WorkDay": "",
+			"Bookmarked":1
 		}
 	],
 	"total": 1
