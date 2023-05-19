@@ -27,5 +27,11 @@
         "AKA" : "UPDATE Dreame.UserInfo SET AKA = %s WHERE UserID like %s",
         "Town" : "UPDATE Dreame.UserInfo SET Town = %s WHERE UserID like %s",
         "getCard" : "SELECT Card FROM Dreame.UserInfo WHERE (UserID like %s)"
+    },
+    "City" : {
+        "Do" : "SELECT Distinct(Do) FROM Dreame.CityList",
+        "Si" : "",
+        "GunGu" : "",
+        "Dong" : "" 
     }
 }

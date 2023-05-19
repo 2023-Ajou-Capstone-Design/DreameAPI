@@ -88,5 +88,3 @@ def cardCharge():
     return charge
     
     # return res[0][0]
-    
-    
