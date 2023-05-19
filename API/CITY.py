@@ -39,7 +39,7 @@ def getSiList():
     }
     return jsonify(data)
 
-##시 리스트 출력
+##군구 리스트 출력
 @city_bp.route("/GunGu",methods = ["POST"])
 def getGunGuList():
     Do = request.values.get('Do')
@@ -50,6 +50,25 @@ def getGunGuList():
     rows = conn.select(sql,(Do,Si))
     
     keys = ("GunGu")
+    items = [dict(zip(keys,row)) for row in rows]
+    data = {
+        "total" : len(rows),
+        "items" : items
+    }
+    return jsonify(data)
+
+##군구 리스트 출력
+@city_bp.route("/Dong",methods = ["POST"])
+def getDongList():
+    Do = request.values.get('Do')
+    Si = request.values.get("Si")
+    GunGu = request.values.get("GunGu")
+    
+    sql = city_sql.get("Dong")
+    conn = DB()
+    rows = conn.select(sql,(Do,Si,GunGu))
+    
+    keys = ("Dong")
     items = [dict(zip(keys,row)) for row in rows]
     data = {
         "total" : len(rows),

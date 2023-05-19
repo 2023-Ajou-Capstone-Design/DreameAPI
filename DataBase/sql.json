@@ -32,6 +32,6 @@
         "Do" : "SELECT Distinct(Do) FROM Dreame.CityList",
         "Si" : "SELECT Distinct(Si) FROM Dreame.CityList WHERE Do like %s",
         "GunGu" : "SELECT Distinct(GunGu) FROM Dreame.CityList WHERE Do like %s AND Si like %s",
-        "Dong" : "" 
+        "Dong" : "SELECT Distinct(Dong) FROM Dreame.CityList WHERE Do like %s AND Si like %s AND GunGu like %s" 
     }
 }
