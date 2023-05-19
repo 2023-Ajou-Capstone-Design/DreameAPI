@@ -2,6 +2,7 @@
 from flask import Blueprint,request,jsonify
 import base64
 from DataBase.DB import DB
+from Fucntions.BROWSER import Browser
 import base64
 import json
 
@@ -65,3 +66,27 @@ def townChange():
     conn = DB()
     res = conn.update(sql,(town,uId))
     return res
+
+## 카드 잔액조회
+@mypage_bp.route("/Card",methods = ["POST"])
+def cardCharge():
+    uID = request.values.get("UserID")
+    sql = mypage_sql.get("getCard")
+    conn = DB()
+    res = conn.select(sql,(uID))
+    
+    try :
+        if len(res[0][0]) != 16 or res[0][0].isdigit() == False:
+            return "Card Error!"
+    except :
+        return "No Card Number"
+    
+    br  = Browser()
+    br.WaifForLoadPage("https://gdream.gg.go.kr/Login/PointCheck.jsp")
+    charge = br.PutData(res[0][0])
+
+    return charge
+    
+    # return res[0][0]
+    
+    
