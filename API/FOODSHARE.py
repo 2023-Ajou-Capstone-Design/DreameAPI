@@ -69,6 +69,7 @@ def FoodDetail():
         item["Photo2"] = base64ToString(item["Photo2"])
         item["Photo3"] = base64ToString(item["Photo3"])
         item["UserID"] = str(item["UserID"])
+        item["Town"] = str(item["Town"])
     
     data =   {
         "total" : len(rows),

@@ -7,7 +7,7 @@
     "FoodShare" :{
         "add" : "INSERT INTO Dreame.FoodShare(WritingID, UploadTime, Title, Contents, Photo1, Photo2, Photo3,UserID,Town) VALUES(now(), now(), %s,%s,%s,%s,%s,%s,%s)",
         "del" : "DELETE FROM Dreame.FoodShare WHERE (UserID like %s AND WritingID = %s)",
-        "detail" : "SELECT WritingID,UploadTime,Title,Contents,Photo1,Photo2,Photo3,UserID FROM Dreame.FoodShare WHERE (WritingID = %s AND UserID like %s)",
+        "detail" : "SELECT WritingID,UploadTime,Title,Contents,Photo1,Photo2,Photo3,UserID,Town FROM Dreame.FoodShare WHERE (WritingID = %s AND UserID like %s)",
         "getList" : "SELECT WritingID, UploadTime, Title, Photo1, UserID, Town FROM Dreame.FoodShare WHERE (Town like %s) ORDER BY UploadTime DESC",
         "modify" : "UPDATE Dreame.FoodShare SET UploadTime = now(), Photo1 =%s, Photo2 = %s, Photo3 = %s, Title = %s, Contents = %s, Town = %s WHERE UserID like %s and WritingID = %s"
     },
